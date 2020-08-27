@@ -1,0 +1,18 @@
+config:
+  aws:profile: gio_poc
+  aws:region: eu-west-1
+  prod-giooperator:corporate_domain_name: mycompany.io
+  prod-giooperator:desired_fargate_profile_name: giofargateprofile
+  prod-giooperator:elastic_endpoint: http://54.228.103.148:9200
+  prod-giooperator:gravitee_apim_chart_version: 3.0.4
+  prod-giooperator:gravitee_apim_helm_chart_repo_id: apim3
+  prod-giooperator:gravitee_apim_helm_release_name: graviteeio-stack
+  prod-giooperator:gravitee_containers_tag: 3.1.1
+  prod-giooperator:k8s_namespace: default
+  prod-giooperator:kubectl_port_forward_mgmt_api: "8383"
+  prod-giooperator:kubectl_port_forward_mgmt_ui: "8002"
+  prod-giooperator:mongo_db_name: graviteedb
+  prod-giooperator:mongo_host: 54.228.103.148
+  prod-giooperator:mongo_port: "27017"
+  prod-giooperator:mongo_uri_protocol: mongodb+srv
+  prod-postnloperator:k8s_namespace: default

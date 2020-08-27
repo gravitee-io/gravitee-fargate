@@ -1,0 +1,10 @@
+# --
+# -- Ingnoring node_modules
+node_modules/
+# --
+# -- Ingnoring node_modules
+node_modules/
+# pulumi build output folder
+bin/
+# Team temp work
+README.temp.md

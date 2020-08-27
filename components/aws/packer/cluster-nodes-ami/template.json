@@ -1,0 +1,36 @@
+{
+    "variables": {
+      "source_ami": "{{env `SOURCE_AMI`}}",
+      "region":     "{{env `AWS_REGION`}}"
+    },
+    "builders": [
+      {
+        "type":          "amazon-ebs",
+        "region":        "{{user `region`}}",
+        "source_ami":    "{{user `source_ami`}}",
+        "instance_type": "t2.medium",
+        "ami_name":      "amazonlinux_{{timestamp}}",
+        "ssh_username":  "ec2-user"
+      }
+    ],
+    "provisioners": [ {
+            "type": "file",
+            "source": "{{template_dir}}/gio-seed.txt",
+            "destination": "~/gio-seed.txt"
+        },
+        {
+            "type": "shell",
+
+            "inline": [
+              "sudo yum update -y",
+              "echo 'preseeding gio EKS Cluster Node succeeded'"
+            ]
+        },
+        {
+            "scripts": [
+                "{{template_dir}}/elastic-system-setup.sh"
+            ],
+            "type": "shell"
+        }
+    ]
+}

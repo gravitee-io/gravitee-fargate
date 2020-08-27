@@ -1,0 +1,23 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: "treafik-ingress"
+  namespace: default
+  annotations:
+    # imageregistry: "https://hub.docker.com/"
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+spec:
+  rules:
+    - host: api.mycompany.io
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: graviteeio-apim3x-gateway # Where Helm Release name for [Gravitee APIM 3.x] is [graviteeio-apim3x]
+              servicePort: 83 # spec.rules[0].http.paths[0].backend.serviceName : to set int Pulumi module
+                              # spec.rules[0].http.paths[0].backend.servicePort : to set int Pulumi module
+          # - path: /foo
+            # backend:
+              # serviceName: service1
+              # servicePort: 80

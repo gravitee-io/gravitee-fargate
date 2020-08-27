@@ -1,0 +1,32 @@
+# The PostNL Cluster OS image : PXEless boot of the cluster
+
+### Buildnd the AWS AMI for cluster nodes
+
+* In your environement, you need :
+  * `pulumi`
+  * `aws-cli`
+  * `packer`
+  * the `AWS` credentials for the tenant you work for, on the lcal filesystem at `~/.aws/credentials`
+
+* Execute :
+
+```bash
+# ---
+./components/aws/packer/cluster-nodes-ami/packer-quick-install.sh
+./components/aws/packer/cluster-nodes-ami/build-ami.sh
+
+packer build -var 'ami_name_prefix=http-benchmarking' template.json
+```
+
+# Publishing
+
+ gio Amazon AWS AMI build at Tue May 26 18:37:07 CEST 2020
+
+# Publishing
+
+ gio Amazon AWS AMI build at Sat 22 Aug 2020 12:30:04 PM CEST
+
+
+# Publishing
+
+ gio Amazon AWS AMI build at Sat 22 Aug 2020 12:31:33 PM CEST

@@ -1,0 +1,4 @@
+name: prod-giooperator
+# name: gio
+runtime: nodejs
+description: POC gio Fargate Case

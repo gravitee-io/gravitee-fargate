@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  labels:
+    app: traefik
+    eks.amazonaws.com/fargate-profile: giofargateprofile
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ports:
+    - protocol: TCP
+      name: web
+      port: 8000
+    - protocol: TCP
+      name: admin
+      port: 8080
+    - protocol: TCP
+      name: websecure
+      port: 4443
+  selector:
+    app: traefik
+  # type: LoadBalancer # AWS ALB will be ingress controller instead of Traefik
+  type: ClusterIP

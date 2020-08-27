@@ -1,0 +1,67 @@
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: http-gravitee-am-ui
+#   namespace: default
+# spec:
+#   entryPoints:
+#     # - web
+#     - default
+#   routes:
+#   - match: Host(`gravitee-am-ui.mycompany.io`) && PathPrefix(`/notls`)
+#     kind: Rule
+#     services:
+#     # ---
+#     # Who am i ? I am Saint Nectaire.
+#     # ---
+#     # 'gravitee-am' is the helm relase name for my Helm dployment of
+#     # Gravtiee AM  : should be in a valuees.yaml for a helm chart.
+#     - name: gravitee-am-ui
+#       port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-gravitee-am-ui
+  namespace: default
+spec:
+  entryPoints:
+    # ok, "websecure" est un référence au nom d'un "containerPort" pour le "kind: Deployment" de "Traefik" (et non pas whoami)
+    # en gros, c'est poru dire "dans quel utyau, le http, ou le https, je mets mon app?"
+    - websecure
+  routes:
+    # PathPrefix(`/ui`) # PathPrefix(`/am/ui`) # PathPrefix(`/dashboard`)
+  # - match: Host(`gravitee-am-ui.mycompany.io`) && PathPrefix(`/`)
+  # - match: Host(`gravitee-am-ui.mycompany.io`) && PathPrefix(`/am/ui`)
+  # - match: Host(`gravitee-am-ui.mycompany.io`) && PathPrefix(`/ui`)
+  # - match: Host(`gravitee-am-ui.mycompany.io`) && PathPrefix(`/am/ui`)
+  - match: Host(`gravitee-am-ui.mycompany.io`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: gravitee-am-management-ui
+      port: 8002 # cf. [kubectl describe service/gravitee-am-management-ui|grep 'Port:']
+    middlewares:
+      - name: uicors
+  tls:
+    certResolver: default
+    # certResolver: gio-pki
+
+# --- Middleware Traefik : CORS ALLOW ORIGIN
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata: # Allow Cross Origin RequestS
+  name: uicors
+spec:
+  headers:
+    accessControlAllowMethods:
+      - "GET"
+      - "OPTIONS"
+      - "PUT"
+      - "POST"
+      - "DELETE"
+    accessControlAllowOriginList:
+      - "https://gravitee-am-ui.mycompany.io:4443"
+      - "https://gravitee-am-api.mycompany.io:4443"
+    accessControlMaxAge: 100
+    addVaryHeader: "true"

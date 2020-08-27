@@ -1,0 +1,41 @@
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: http-gravitee-am-ui
+#   namespace: default
+# spec:
+#   entryPoints:
+#     # - web
+#     - default
+#   routes:
+#   - match: Host(`gravitee-am-ui.mycompany.io`) && PathPrefix(`/notls`)
+#     kind: Rule
+#     services:
+#     # ---
+#     # Who am i ? I am Saint Nectaire.
+#     # ---
+#     # 'gravitee-am' is the helm relase name for my Helm dployment of
+#     # Gravtiee AM  : should be in a valuees.yaml for a helm chart.
+#     - name: gravitee-am-ui
+#       port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: https-gravitee-am-ui-static
+  namespace: default
+spec:
+  entryPoints:
+    # ok, "websecure" est un référence au nom d'un "containerPort" pour le "kind: Deployment" de "Traefik" (et non pas whoami)
+    # en gros, c'est poru dire "dans quel tuyau, le http, ou le https, je mets mon app?"
+    - websecure
+  routes:
+    # PathPrefix(`/ui`) # PathPrefix(`/am/ui`) # PathPrefix(`/dashboard`)
+  - match: Host(`gravitee-am-ui.mycompany.io`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: gravitee-am-management-ui
+      port: 8002 # cf. [kubectl describe service/gravitee-am-management-ui|grep 'Port:']
+  tls:
+    certResolver: default
+    # certResolver: gio-pki
