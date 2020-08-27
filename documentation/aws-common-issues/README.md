@@ -8,7 +8,7 @@ The oldest ones are at the bottom of this page, and the most recent on top.
 
 ### Fargate Scheduler issue
 
-_**Status [`being processed`] - Case ID: `XXXXXXXX`**_ : Issue being processed by AWS `eu-west-1` Support Team
+_**Status [`being processed`] - Case ID: `7321511841`**_ : Issue being processed by AWS `eu-west-1` Support Team
 
 Gravitee Team has currently opened a case at AWS on `eu-west-1` AWS Region, regarding Fargate Scheduler not Scheduling Pods, in August `2020`, referenced with ID `` :
 
