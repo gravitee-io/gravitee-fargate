@@ -24,7 +24,7 @@
     "@types/read-package-tree": "^5.2.0",
     "@types/semver": "^5.5.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.5.0",
+    "mocha": "^4.0.0",
     "tslint": "^5.11.0"
   }
 }
